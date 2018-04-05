@@ -19,7 +19,7 @@ class LoginRequired extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  loggedIn: state.loggedIn
+  loggedIn: state.auth.loggedIn
 })
 
 export default connect(mapStateToProps, null)(LoginRequired);

@@ -24,7 +24,7 @@ class PhoneDetail extends Component {
   componentDidMount() {
     const { match, phones } = this.props;
     const id = match.params.id;
-    const phone = phones.filter(phone => phone.id === id).pop();
+    const phone = phones.filter(phone => phone.id === id * 1).pop();
 
     this.setState({ phone: phone });
 
@@ -34,7 +34,7 @@ class PhoneDetail extends Component {
     const { removePhone, history } = this.props;
     const { id } = this.state.phone;
     removePhone(id);
-    history.push(endPoints.list);
+    history.push(endPoints.default);
   }
 
   handleClickOnEdit() {
@@ -44,6 +44,7 @@ class PhoneDetail extends Component {
   }
 
   render() {
+    console.log(this.state.phone);
     const { model, price, status } = this.state.phone;
     return (
       <Card>
@@ -51,7 +52,7 @@ class PhoneDetail extends Component {
           <img
             src={require("../../images/iphone.jpg")}
             alt="iphone"
-            style={{ height: "100px" }}
+            style={{ height: "100%" }}
           />
         </CardMedia>
         <CardTitle title={model} />

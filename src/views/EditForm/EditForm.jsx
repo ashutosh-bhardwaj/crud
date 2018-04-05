@@ -11,14 +11,13 @@ import RaisedButton from "material-ui/RaisedButton";
 import { updatePhone } from '../../redux/actions';
 import { endPoints } from '../../config/routes';
 
-class AddForm extends Component {
+class EditForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      model: "Iphone x",
-      status: "old",
+      model: '',
       price: 0,
-      action: '',
+      status: '',
       id: 0
     };
 
@@ -33,13 +32,13 @@ class AddForm extends Component {
     const { match, phones } = this.props;
     const id = match.params.id;
 
-    const phone = phones.filter(phone => phone.id !== id).pop();
+    const phone = phones.filter(phone => phone.id === id * 1).pop();
 
-    this.setState({ model: phone.model, status: phone.status, price: phone.price, id: id });
+    this.setState({ model: phone.model, status: phone.status, price: phone.price, id: phone.id });
 
   }
 
-  handleModelChange(event, value) {
+  handleModelChange(event, index, value) {
     this.setState({ model: value });
   }
 
@@ -60,17 +59,19 @@ class AddForm extends Component {
     };
     const { history, updatePhone } = this.props;
     updatePhone(id, payload);
-    history.push(endPoints.add);
+    history.push(endPoints.default);
 
   }
 
   render() {
+    console.log(this.state);
+    const { model, price, status } = this.state;
     return (
       <Paper zDepth={2} style={{ padding: "20px" }}>
         <SelectField
           floatingLabelText="Models"
-          value={this.state.model}
-          onChange={this.handleChange}
+          value={model}
+          onChange={this.handleModelChange}
         >
           <MenuItem value="Iphone 7" primaryText="Iphone 7" />
           <MenuItem value="Iphone 7s" primaryText="Iphone 7s" />
@@ -83,11 +84,11 @@ class AddForm extends Component {
         <br />
         <RadioButtonGroup
           name="old-new"
-          onChange={this.handleRadioChange}
-          defaultSelected="old"
+          onChange={this.handleStatusChange}
+          defaultSelected={status}
         >
           <RadioButton
-            value="brand new"
+            value="new"
             label="New"
             style={styles.radioButton}
           />
@@ -96,7 +97,7 @@ class AddForm extends Component {
         <TextField
           floatingLabelText="price"
           hintText="$"
-          value={this.state.price}
+          value={price}
           onChange={this.handlePriceChange}
         />
         <br />
@@ -110,17 +111,17 @@ class AddForm extends Component {
   }
 }
 
-const AddFormWithRouter = withRouter(AddForm);
+const EditFormWithRouter = withRouter(EditForm);
 
 const mapStateToProps = (state) => ({
   phones: state.phones
 })
 
 const mapDispatchToProps = (dispatch) => ({
-  updatePhone: dispatch(updatePhone)
+  updatePhone: (id, payload) => dispatch(updatePhone(id, payload))
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(AddFormWithRouter);
+export default connect(mapStateToProps, mapDispatchToProps)(EditFormWithRouter);
 
 const styles = {
   radioButton: {

@@ -1,10 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { renderRoutes } from 'react-router-config';
+import { Redirect } from 'react-router-dom';
 import TextField from 'material-ui/TextField';
 import Paper from 'material-ui/Paper';
 import RaisedButton from 'material-ui/RaisedButton';
 import { logIn } from '../../redux/actions';
+
+import { endPoints } from '../../config/routes';
 
 import './Auth.css';
 
@@ -44,7 +46,9 @@ class Auth extends React.Component {
       this.setState({ password: '', passwordErrorMessage: 'Wrong Password' });
     }
     console.log('Logging in...');
-    this.props.logIn();
+
+    this.props.login();
+    this.setState({ loggedIn: true });
   }
 
   handleEmailChange = (event) => {
@@ -62,13 +66,10 @@ class Auth extends React.Component {
   }
 
   render() {
-    const { route, loggedIn } = this.props;
-
+    const { loggedIn } = this.props;
     if (loggedIn) {
       return (
-        <div>
-          {renderRoutes(route.routes)}
-        </div>
+        <Redirect to={endPoints.default} />
       )
     } else {
       return (
@@ -120,10 +121,14 @@ class Auth extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-  loggedIn: state.loggedIn
+  loggedIn: state.auth.loggedIn
 })
 
-export default connect(mapStateToProps, { logIn })(Auth);
+const mapDispatchToProps = (dispatch) => ({
+  login: () => dispatch(logIn()),
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(Auth);
 
 const styles = {
   formStyle: {

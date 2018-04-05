@@ -14,7 +14,11 @@ export default [
         component: App,
         routes: [
             {
+                path: endPoints.signin,
                 exact: true,
+                component: Auth, // View component
+            },
+            {
                 path: endPoints.default,
                 component: LoginRequired,   // Route protector
                 routes: [
@@ -27,7 +31,7 @@ export default [
                                 component: Auth, // View component
                             },
                             {
-                                path: endPoints.list,
+                                path: endPoints.default,
                                 exact: true,
                                 component: PhoneList, // View component
                             },

@@ -28,7 +28,7 @@ class AddForm extends Component {
 
   }
 
-  handleModelChange(event, value) {
+  handleModelChange(event, index, value) {
     this.setState({ model: value });
   }
 
@@ -49,7 +49,7 @@ class AddForm extends Component {
     };
     const { history, addPhone } = this.props;
     addPhone(payload);
-    history.push(endPoints.add);
+    history.push(endPoints.default);
 
   }
 
@@ -59,7 +59,7 @@ class AddForm extends Component {
         <SelectField
           floatingLabelText="Models"
           value={this.state.model}
-          onChange={this.handleChange}
+          onChange={this.handleModelChange}
         >
           <MenuItem value="Iphone 7" primaryText="Iphone 7" />
           <MenuItem value="Iphone 7s" primaryText="Iphone 7s" />
@@ -72,7 +72,7 @@ class AddForm extends Component {
         <br />
         <RadioButtonGroup
           name="old-new"
-          onChange={this.handleRadioChange}
+          onChange={this.handleStatusChange}
           defaultSelected="old"
         >
           <RadioButton

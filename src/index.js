@@ -20,16 +20,19 @@ const defaultStore = {
     {
       model: "Iphone 7",
       price: 699,
-      id: 0,
+      id: 1110,
       status: "old"
     },
     {
       model: "Iphone 8",
       price: 799,
-      id: 1,
+      id: 1111,
       status: "old"
     }
-  ]
+  ],
+  auth: {
+    loggedIn: false
+  }
 };
 
 const store = createStore(rootReducer, defaultStore, enhancers);
