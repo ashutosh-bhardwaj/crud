@@ -64,7 +64,6 @@ class EditForm extends Component {
   }
 
   render() {
-    console.log(this.state);
     const { model, price, status } = this.state;
     return (
       <Paper zDepth={2} style={{ padding: "20px" }}>

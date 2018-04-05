@@ -44,7 +44,6 @@ class PhoneDetail extends Component {
   }
 
   render() {
-    console.log(this.state.phone);
     const { model, price, status } = this.state.phone;
     return (
       <Card>
