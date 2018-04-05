@@ -1,0 +1,14 @@
+.container {
+  display: flex;
+  height: 600px;
+}
+
+.item {
+  flex-grow: 0;
+  flex-basis: 50%;
+}
+.title--lobster{
+  font-family: 'Lobster', cursive;
+  font-size: 40px;
+  text-align: center;
+}

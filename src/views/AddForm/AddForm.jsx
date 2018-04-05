@@ -1,6 +1,6 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import { addItem, updateItem } from "../actions";
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 import Paper from "material-ui/Paper";
 import TextField from "material-ui/TextField";
 import SelectField from "material-ui/SelectField";
@@ -8,39 +8,50 @@ import MenuItem from "material-ui/MenuItem";
 import { RadioButton, RadioButtonGroup } from "material-ui/RadioButton";
 import RaisedButton from "material-ui/RaisedButton";
 
-import * as routes from "../constants/routes";
+import { addPhone } from '../../redux/actions';
+import { endPoints } from '../../config/routes';
 
-class Add extends Component {
+class AddForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      model: this.props.model || "Iphone x",
-      status: this.props.status || "old",
-      price: this.props.price,
-      action: this.props.action,
-      id: this.props.id
+      model: "Iphone x",
+      status: "old",
+      price: '',
+      action: 'ADD'
     };
+
+    this.handleModelChange = this.handleModelChange.bind(this);
+    this.handleStatusChange = this.handleStatusChange.bind(this);
+    this.handlePriceChange = this.handlePriceChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+
   }
 
-  handleChange = (event, index, value) => this.setState({ model: value });
-  handleRadioChange = (event, value) => this.setState({ status: value });
-  handlePriceChange = (event, value) => this.setState({ price: value });
+  handleModelChange(event, value) {
+    this.setState({ model: value });
+  }
 
-  handleSubmit = () => {
-    const { action, model, status, price, id } = this.state;
+  handleStatusChange(event, value) {
+    this.setState({ status: value });
+  }
+
+  handlePriceChange(event, value) {
+    this.setState({ price: value });
+  }
+
+  handleSubmit() {
+    const { model, status, price } = this.state;
     const payload = {
       model,
-      price,
-      status
+      status,
+      price
     };
+    const { history, addPhone } = this.props;
+    addPhone(payload);
+    history.push(endPoints.add);
 
-    if (action === "ADD") {
-      this.props.addItem(payload);
-    } else if (action === "UPDATE") {
-      this.props.updateItem(id, payload);
-    }
-    this.props.history.push(routes.HOME);
-  };
+  }
 
   render() {
     return (
@@ -81,13 +92,16 @@ class Add extends Component {
         {this.state.action === "ADD" ? (
           <RaisedButton label="Add" primary onClick={this.handleSubmit} />
         ) : (
-          <RaisedButton label="Save" primary onClick={this.handleSubmit} />
-        )}
+            <RaisedButton label="Save" primary onClick={this.handleSubmit} />
+          )}
       </Paper>
     );
   }
 }
-export default connect(null, { addItem, updateItem })(Add);
+
+const AddFormWithRouter = withRouter(AddForm);
+
+export default connect(null, { addPhone })(AddFormWithRouter);
 
 const styles = {
   radioButton: {

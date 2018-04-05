@@ -2,9 +2,12 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { createStore, compose } from "redux";
 import { Provider } from "react-redux";
+import { BrowserRouter as Router } from 'react-router-dom';
+import { renderRoutes } from 'react-router-config';
 
-import rootReducer from "./reducers";
-import App from "./components/App";
+import rootReducer from "./redux/reducers";
+import routes from './config/routes';
+
 import "./index.css";
 import registerServiceWorker from "./registerServiceWorker";
 
@@ -33,7 +36,9 @@ const store = createStore(rootReducer, defaultStore, enhancers);
 
 ReactDOM.render(
   <Provider store={store}>
-    <App />
+    <Router>
+      {renderRoutes(routes)}
+    </Router>
   </Provider>,
   document.getElementById("root")
 );
