@@ -53,7 +53,6 @@ class Auth extends React.Component {
     const isValid = this.isFieldsValid();
 
     if (isValid) {
-      console.log('Logging in...');
       this.props.logIn();
       this.setState({ loggedIn: true });
     }
