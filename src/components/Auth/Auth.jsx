@@ -19,53 +19,64 @@ class Auth extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      email: '',
-      password: '',
-      emailErrorMessage: '',
-      passwordErrorMessage: '',
+      field: { email: '', password: '' },
+      error: { email: '', password: '' },
       loggedIn: this.props.loggedIn,
     };
   }
 
+  isFieldsValid() {
+    const { field, error } = this.state;
+
+    if (field.email === '') {
+      error.email = 'It looks like you forgot email!';
+    }
+    if (field.password === '') {
+      error.password = 'You can tell us the password!';
+    }
+    if (field.email !== '' && field.email !== user.email) {
+      field.email = '';
+      error.email = 'Wrong Email';
+    }
+    if (field.password !== '' && field.password !== user.password) {
+      field.password = '';
+      error.password = 'Wrong Password';
+    }
+    if (field.email === user.email && field.password === user.password) {
+      return true;
+    }
+    this.setState({ field, error });
+    return false;
+  }
+
   handleClick = () => {
-    const { email, password } = this.state;
-    if (email === '') {
-      this.setState({ emailErrorMessage: 'It looks like you forgot email!' });
-    }
-    if (password === '') {
-      this.setState({ passwordErrorMessage: 'You can tell us the password!' });
-    }
-    if (email === user.email && password === user.password) {
-      this.props.login();
+    const isValid = this.isFieldsValid();
+
+    if (isValid) {
+      console.log('Logging in...');
+      this.props.logIn();
       this.setState({ loggedIn: true });
     }
-    if (email !== '' && email !== user.email) {
-      this.setState({ email: '', emailErrorMessage: 'Wrong Email' });
-    }
-    if (password !== '' && password !== user.password) {
-      this.setState({ password: '', passwordErrorMessage: 'Wrong Password' });
-    }
-    console.log('Logging in...');
-
-    this.props.login();
-    this.setState({ loggedIn: true });
   }
 
   handleEmailChange = (event) => {
+    const { field, error } = this.state;
     this.setState({
-      email: event.target.value,
-      emailErrorMessage: '',
+      field: { email: event.target.value, password: field.password },
+      error: { email: '', password: error.password },
     });
   };
 
   handlePasswordChange = (event) => {
+    const { field, error } = this.state;
     this.setState({
-      password: event.target.value,
-      passwordErrorMessage: '',
+      field: { password: event.target.value, email: field.email },
+      error: { password: '', email: error.email },
     });
   }
 
   render() {
+    const { field, error } = this.state;
     const { loggedIn } = this.props;
     if (loggedIn) {
       return (
@@ -85,8 +96,8 @@ class Auth extends React.Component {
             <br />
             <TextField
               hintText="Email"
-              errorText={this.state.emailErrorMessage}
-              value={this.state.email}
+              errorText={error.email}
+              value={field.email}
               onChange={this.handleEmailChange}
             />
             <br />
@@ -94,8 +105,8 @@ class Auth extends React.Component {
             <TextField
               hintText="Password"
               type="password"
-              errorText={this.state.passwordErrorMessage}
-              value={this.state.password}
+              errorText={error.password}
+              value={field.password}
               onChange={this.handlePasswordChange}
             />
             <br />
@@ -103,7 +114,6 @@ class Auth extends React.Component {
               label="Log In"
               primary
               onClick={this.handleClick}
-              disabled={this.state.isRobot}
             />
           </Paper>
           <Paper className="item" zDepth={2}>
@@ -124,11 +134,8 @@ const mapStateToProps = (state) => ({
   loggedIn: state.auth.loggedIn
 })
 
-const mapDispatchToProps = (dispatch) => ({
-  login: () => dispatch(logIn()),
-})
 
-export default connect(mapStateToProps, mapDispatchToProps)(Auth);
+export default connect(mapStateToProps, { logIn })(Auth);
 
 const styles = {
   formStyle: {
