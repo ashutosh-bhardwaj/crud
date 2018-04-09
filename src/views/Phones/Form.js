@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
 import Paper from "material-ui/Paper";
 import TextField from "material-ui/TextField";
 import SelectField from "material-ui/SelectField";
@@ -8,17 +6,14 @@ import MenuItem from "material-ui/MenuItem";
 import { RadioButton, RadioButtonGroup } from "material-ui/RadioButton";
 import RaisedButton from "material-ui/RaisedButton";
 
-import { addPhone } from '../../redux/actions';
-import { endPoints } from '../../config/routes';
-
-class AddForm extends Component {
+class Form extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      model: "Iphone x",
-      status: "old",
-      price: '',
-      action: 'ADD'
+      model: this.props.model || "Iphone x",
+      status: this.props.status || "old",
+      price: this.props.price || '',
+      action: this.props.action,
     };
 
     this.handleModelChange = this.handleModelChange.bind(this);
@@ -42,15 +37,13 @@ class AddForm extends Component {
 
   handleSubmit() {
     const { model, status, price } = this.state;
+    const { id } = this.props;
     const payload = {
       model,
       status,
       price
     };
-    const { history, addPhone } = this.props;
-    addPhone(payload);
-    history.push(endPoints.default);
-
+    this.props.handleOnClick(payload, id);
   }
 
   render() {
@@ -99,9 +92,7 @@ class AddForm extends Component {
   }
 }
 
-const AddFormWithRouter = withRouter(AddForm);
-
-export default connect(null, { addPhone })(AddFormWithRouter);
+export default Form;
 
 const styles = {
   radioButton: {

@@ -5,7 +5,7 @@ import { renderRoutes } from 'react-router-config';
 import AppBar from "material-ui/AppBar";
 import AddCircle from "material-ui/svg-icons/content/add-circle";
 
-import { endPoints } from '../../config/routes';
+import { endPoints } from '../../../config/routes';
 
 class HeaderLayout extends Component {
   constructor(props) {

@@ -3,11 +3,13 @@ import Auth from '../../components/Auth';
 
 import { LoginRequired } from '../../components/RouteWrappers';
 import endPoints from './endpoints';
-import HeaderLayout from '../../views/HeaderLayout';
-import PhoneList from '../../views/PhoneList';
-import PhoneDetail from '../../views/PhoneDetail';
-import AddForm from '../../views/AddForm';
-import EditForm from '../../views/EditForm';
+import { HeaderLayout } from '../../views/Layouts';
+import {
+    PhoneList,
+    PhoneDetail,
+    AddPhone,
+    EditPhone
+} from '../../views/Phones';
 
 export default [
     {
@@ -38,11 +40,11 @@ export default [
                             {
                                 path: endPoints.add,
                                 exact: true,
-                                component: AddForm // View component
+                                component: AddPhone // View component
                             },
                             {
                                 path: endPoints.editWithId,
-                                component: EditForm // View component
+                                component: EditPhone // View component
                             },
                             {
                                 path: endPoints.detailWithId,

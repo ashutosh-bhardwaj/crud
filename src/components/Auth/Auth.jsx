@@ -118,7 +118,7 @@ class Auth extends React.Component {
           <Paper className="item" zDepth={2}>
             <img
               style={{ width: '100%', height: '100%' }}
-              src={require('../../images/photo.jpg')}
+              src={require('../../assests/images/photo.jpg')}
               alt="beach, waves"
             />
           </Paper>

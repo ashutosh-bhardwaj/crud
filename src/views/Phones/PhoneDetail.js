@@ -49,7 +49,7 @@ class PhoneDetail extends Component {
       <Card>
         <CardMedia>
           <img
-            src={require("../../images/iphone.jpg")}
+            src={require("../../assests/images/iphone.jpg")}
             alt="iphone"
             style={{ height: "100%" }}
           />
