@@ -43,8 +43,8 @@ const mapStateToProps = (state) => ({
   phones: state.phones
 })
 
-const mapDispatchToProps = (dispatch) => ({
-  updatePhone: (id, payload) => dispatch(updatePhone(id, payload))
-})
+// const mapDispatchToProps = (dispatch) => ({
+//   updatePhone: (id, payload) => dispatch(updatePhone(id, payload))
+// })
 
-export default connect(mapStateToProps, mapDispatchToProps)(EditPhoneWithRouter);
+export default connect(mapStateToProps, { updatePhone })(EditPhoneWithRouter);

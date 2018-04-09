@@ -6,11 +6,11 @@ import {
   CardActions,
   CardMedia,
   CardTitle,
-  CardText
-} from "material-ui/Card";
-import RaisedButton from "material-ui/RaisedButton";
+  CardText,
+} from 'material-ui/Card';
+import RaisedButton from 'material-ui/RaisedButton';
 
-import { removePhone } from "../../redux/actions";
+import { removePhone } from '../../redux/actions';
 import { endPoints } from '../../config/routes';
 
 class PhoneDetail extends Component {
@@ -21,13 +21,12 @@ class PhoneDetail extends Component {
     this.handleClickOnEdit = this.handleClickOnEdit.bind(this);
   }
 
-  componentDidMount() {
+  componentWillMount() {
     const { match, phones } = this.props;
     const id = match.params.id;
-    const phone = phones.filter(phone => phone.id === id * 1).pop();
+    const selectedPhone = phones.filter(phone => phone.id === id * 1).pop();
 
-    this.setState({ phone: phone });
-
+    this.setState({ phone: selectedPhone });
   }
 
   handleClickOnDelete() {
@@ -40,7 +39,7 @@ class PhoneDetail extends Component {
   handleClickOnEdit() {
     const { history } = this.props;
     const { id } = this.state.phone;
-    history.push(endPoints.edit + '/' + id);
+    history.push(`${endPoints.phoneEdit}/${id}`);
   }
 
   render() {
@@ -49,9 +48,9 @@ class PhoneDetail extends Component {
       <Card>
         <CardMedia>
           <img
-            src={require("../../assests/images/iphone.jpg")}
+            src={require(`../../assets/images/iphone.jpg`)}
             alt="iphone"
-            style={{ height: "100%" }}
+            style={{ height: '100%' }}
           />
         </CardMedia>
         <CardTitle title={model} />
@@ -79,8 +78,8 @@ class PhoneDetail extends Component {
 
 const PhoneDetailWithRouter = withRouter(PhoneDetail);
 
-const mapStateToProps = (state) => ({
-  phones: state.phones
-})
+const mapStateToProps = state => ({
+  phones: state.phones,
+});
 
 export default connect(mapStateToProps, { removePhone })(PhoneDetailWithRouter);

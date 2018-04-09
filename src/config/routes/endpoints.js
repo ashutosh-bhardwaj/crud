@@ -1,9 +1,9 @@
 export default {
     default: '/',
     signin: '/login',
-    add: '/add',
-    detail: '/detail',
-    detailWithId: '/detail/:id',
-    edit: '/edit',
-    editWithId: '/edit/:id'
+    phoneAdd: '/phone/add',
+    phoneDetail: '/phone/detail',
+    phoneDetailWithId: '/phone/detail/:id',
+    phoneEdit: '/phone/edit',
+    phoneEditWithId: '/phone/edit/:id'
 }

@@ -34,11 +34,11 @@ class Auth extends React.Component {
     if (field.password === '') {
       error.password = 'You can tell us the password!';
     }
-    if (field.email !== '' && field.email !== user.email) {
+    if (!field.email && !field.email.trim() && field.email !== user.email) {
       field.email = '';
       error.email = 'Wrong Email';
     }
-    if (field.password !== '' && field.password !== user.password) {
+    if (!field.password && !field.password.trim() && field.password !== user.password) {
       field.password = '';
       error.password = 'Wrong Password';
     }
@@ -118,7 +118,7 @@ class Auth extends React.Component {
           <Paper className="item" zDepth={2}>
             <img
               style={{ width: '100%', height: '100%' }}
-              src={require('../../assests/images/photo.jpg')}
+              src={require('../../assets/images/photo.jpg')}
               alt="beach, waves"
             />
           </Paper>

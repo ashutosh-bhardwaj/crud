@@ -38,16 +38,16 @@ export default [
                                 component: PhoneList, // View component
                             },
                             {
-                                path: endPoints.add,
+                                path: endPoints.phoneAdd,
                                 exact: true,
                                 component: AddPhone // View component
                             },
                             {
-                                path: endPoints.editWithId,
+                                path: endPoints.phoneEditWithId,
                                 component: EditPhone // View component
                             },
                             {
-                                path: endPoints.detailWithId,
+                                path: endPoints.phoneDetailWithId,
                                 component: PhoneDetail // View component
                             },
                         ]
