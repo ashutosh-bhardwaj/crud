@@ -7,7 +7,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 import { logIn } from '../../redux/actions';
 
 import { endPoints } from '../../config/routes';
-
+import { BACKGROUND } from '../../lib/constants';
 import './Auth.css';
 
 const user = {
@@ -23,6 +23,7 @@ class Auth extends React.Component {
       error: { email: '', password: '' },
       loggedIn: this.props.loggedIn,
     };
+    this.handleClick = this.handleClick.bind(this);
   }
 
   isFieldsValid() {
@@ -49,7 +50,7 @@ class Auth extends React.Component {
     return false;
   }
 
-  handleClick = () => {
+  handleClick() {
     const isValid = this.isFieldsValid();
 
     if (isValid) {
@@ -118,7 +119,7 @@ class Auth extends React.Component {
           <Paper className="item" zDepth={2}>
             <img
               style={{ width: '100%', height: '100%' }}
-              src={require('../../assets/images/photo.jpg')}
+              src={BACKGROUND}
               alt="beach, waves"
             />
           </Paper>

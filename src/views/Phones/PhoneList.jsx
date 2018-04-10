@@ -14,7 +14,7 @@ function PhoneList(props) {
   const { phones } = props;
   return (
     <div>
-      {phones.length === 0 ? (
+      {!phones.length ? (
         <EmptyList />
       ) : (
           <List>

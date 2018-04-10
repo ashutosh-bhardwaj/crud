@@ -26,7 +26,7 @@ class HeaderLayout extends Component {
           iconStyleRight={{ padding: "10px" }}
           onRightIconButtonClick={this.handleToggleAdd}
         />
-        {this.state.add && <Redirect to={endPoints.add} />}
+        {this.state.add && <Redirect to={endPoints.phoneAdd} />}
         {renderRoutes(route.routes)}
       </div>
     );

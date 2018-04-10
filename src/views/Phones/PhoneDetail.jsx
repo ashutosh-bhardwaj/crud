@@ -12,6 +12,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 
 import { removePhone } from '../../redux/actions';
 import { endPoints } from '../../config/routes';
+import { PHONE } from '../../lib/constants';
 
 class PhoneDetail extends Component {
   constructor(props) {
@@ -48,7 +49,7 @@ class PhoneDetail extends Component {
       <Card>
         <CardMedia>
           <img
-            src={require(`../../assets/images/iphone.jpg`)}
+            src={PHONE}
             alt="iphone"
             style={{ height: '100%' }}
           />
