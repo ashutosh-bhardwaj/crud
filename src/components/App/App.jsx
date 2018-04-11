@@ -1,20 +1,25 @@
-import React, { Component } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { renderRoutes } from 'react-router-config';
-import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
-class App extends Component {
+import Notice from '../Notice';
 
-  render() {
-    const { route } = this.props;
-    return (
-      <MuiThemeProvider>
-        <div>
-          {renderRoutes(route.routes)}
-        </div>
-      </MuiThemeProvider>
+function App(props) {
+  const { route } = props;
+  return (
+    <MuiThemeProvider>
+      <div>
+        {renderRoutes(route.routes)}
+        <Notice />
+      </div>
+    </MuiThemeProvider>
 
-    );
-  }
+  );
 }
+
+App.propTypes = {
+  route: PropTypes.object.isRequired,
+};
 
 export default App;

@@ -47,6 +47,7 @@ class Auth extends React.Component {
       return true;
     }
     this.setState({ field, error });
+    this.props.openNotice({ message: `${error.email} / ${error.password}` });
     return false;
   }
 
@@ -55,6 +56,7 @@ class Auth extends React.Component {
 
     if (isValid) {
       this.props.logIn();
+      this.props.openNotice({ message: 'Successfully Logged In' });
       this.setState({ loggedIn: true });
     }
   }

@@ -1,19 +1,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { createStore, compose } from 'redux';
 import { Provider } from 'react-redux';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { renderRoutes } from 'react-router-config';
+import CreateStore from './redux';
 
-import rootReducer from './redux/reducers';
 import routes from './config/routes';
 
 import './index.css';
 import registerServiceWorker from './registerServiceWorker';
 
-const enhancers = compose(window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(), );
-
-const defaultStore = {
+const initialStore = {
   phones: [
     {
       model: 'Iphone 7',
@@ -33,7 +30,7 @@ const defaultStore = {
   },
 };
 
-const store = createStore(rootReducer, defaultStore, enhancers);
+const store = CreateStore(initialStore);
 
 ReactDOM.render(
   <Provider store={store}>

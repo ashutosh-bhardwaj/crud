@@ -1,5 +1,5 @@
 import App from '../../components/App';
-import Auth from '../../components/Auth';
+import AuthSigin from '../../views/AuthSignin';
 
 import { LoginRequired } from '../../components/RouteWrappers';
 import endPoints from './endpoints';
@@ -18,7 +18,7 @@ export default [
             {
                 path: endPoints.signin,
                 exact: true,
-                component: Auth, // View component
+                component: AuthSigin, // View component
             },
             {
                 path: endPoints.default,
@@ -30,7 +30,7 @@ export default [
                             {
                                 path: endPoints.signin,
                                 exact: true,
-                                component: Auth, // View component
+                                component: AuthSigin, // View component
                             },
                             {
                                 path: endPoints.default,

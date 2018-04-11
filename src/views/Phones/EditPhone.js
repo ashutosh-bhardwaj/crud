@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
 import { updatePhone } from '../../redux/actions';
+import { notify } from '../../redux/actions/notice';
 import { endPoints } from '../../config/routes';
 import Form from './Form';
 
@@ -23,8 +24,9 @@ class EditPhone extends Component {
   }
 
   handleOnClick = (payload, id) => {
-    const { history, updatePhone } = this.props;
+    const { history, updatePhone, notify } = this.props;
     updatePhone(id, payload);
+    notify({ message: 'Saved Successfully! ' });
     history.push(endPoints.default);
   }
 
@@ -43,8 +45,4 @@ const mapStateToProps = (state) => ({
   phones: state.phones
 })
 
-// const mapDispatchToProps = (dispatch) => ({
-//   updatePhone: (id, payload) => dispatch(updatePhone(id, payload))
-// })
-
-export default connect(mapStateToProps, { updatePhone })(EditPhoneWithRouter);
+export default connect(mapStateToProps, { updatePhone, notify })(EditPhoneWithRouter);

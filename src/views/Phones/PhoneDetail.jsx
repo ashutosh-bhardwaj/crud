@@ -11,6 +11,7 @@ import {
 import RaisedButton from 'material-ui/RaisedButton';
 
 import { removePhone } from '../../redux/actions';
+import { notify } from '../../redux/actions/notice';
 import { endPoints } from '../../config/routes';
 import { PHONE } from '../../lib/constants';
 
@@ -31,9 +32,10 @@ class PhoneDetail extends Component {
   }
 
   handleClickOnDelete() {
-    const { removePhone, history } = this.props;
+    const { removePhone, history, notify } = this.props;
     const { id } = this.state.phone;
     removePhone(id);
+    notify({ message: 'Deleted Successfully!' });
     history.push(endPoints.default);
   }
 
@@ -83,4 +85,4 @@ const mapStateToProps = state => ({
   phones: state.phones,
 });
 
-export default connect(mapStateToProps, { removePhone })(PhoneDetailWithRouter);
+export default connect(mapStateToProps, { removePhone, notify })(PhoneDetailWithRouter);
