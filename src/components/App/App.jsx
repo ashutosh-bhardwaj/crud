@@ -5,7 +5,7 @@ import { renderRoutes } from 'react-router-config';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 import Notice from '../Notice';
-import { windowResize } from '../../redux/actions';
+import { windowResize, setWindowLocation } from '../../redux/actions';
 
 class App extends Component {
   componentDidMount() {
@@ -14,6 +14,10 @@ class App extends Component {
       windowWidth: window.innerWidth,
       windowHeight: window.innerHeight
     });
+  }
+
+  componentDidUpdate() {
+    this.props.setWindowLocation(window.location.pathname);
   }
 
   render() {
@@ -34,4 +38,4 @@ App.propTypes = {
   route: PropTypes.object.isRequired,
 };
 
-export default connect(null, { windowResize })(App);
+export default connect(null, { windowResize, setWindowLocation })(App);
