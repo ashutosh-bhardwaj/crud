@@ -1,40 +1,43 @@
-import React from "react";
-import ReactDOM from "react-dom";
-import { createStore, compose } from "redux";
-import { Provider } from "react-redux";
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { Provider } from 'react-redux';
+import { BrowserRouter as Router } from 'react-router-dom';
+import { renderRoutes } from 'react-router-config';
+import CreateStore from './redux';
 
-import rootReducer from "./reducers";
-import App from "./components/App";
-import "./index.css";
-import registerServiceWorker from "./registerServiceWorker";
+import routes from './config/routes';
 
-const enhancers = compose(
-  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
-);
+import './index.css';
+import registerServiceWorker from './registerServiceWorker';
 
-const defaultStore = {
+const initialStore = {
   phones: [
     {
-      model: "Iphone 7",
+      model: 'Iphone 7',
       price: 699,
-      id: 0,
-      status: "old"
+      id: 1110,
+      status: 'old',
     },
     {
-      model: "Iphone 8",
+      model: 'Iphone 8',
       price: 799,
-      id: 1,
-      status: "old"
-    }
-  ]
+      id: 1111,
+      status: 'old',
+    },
+  ],
+  auth: {
+    loggedIn: false,
+  },
 };
 
-const store = createStore(rootReducer, defaultStore, enhancers);
+const store = CreateStore(initialStore);
 
 ReactDOM.render(
   <Provider store={store}>
-    <App />
+    <Router>
+      {renderRoutes(routes)}
+    </Router>
   </Provider>,
-  document.getElementById("root")
+  document.getElementById('root'),
 );
 registerServiceWorker();

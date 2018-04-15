@@ -1,6 +1,4 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import { addItem, updateItem } from "../actions";
+import React, { Component } from 'react';
 import Paper from "material-ui/Paper";
 import TextField from "material-ui/TextField";
 import SelectField from "material-ui/SelectField";
@@ -8,39 +6,45 @@ import MenuItem from "material-ui/MenuItem";
 import { RadioButton, RadioButtonGroup } from "material-ui/RadioButton";
 import RaisedButton from "material-ui/RaisedButton";
 
-import * as routes from "../constants/routes";
-
-class Add extends Component {
+class Form extends Component {
   constructor(props) {
     super(props);
     this.state = {
       model: this.props.model || "Iphone x",
       status: this.props.status || "old",
-      price: this.props.price,
+      price: this.props.price || '',
       action: this.props.action,
-      id: this.props.id
     };
+
+    this.handleModelChange = this.handleModelChange.bind(this);
+    this.handleStatusChange = this.handleStatusChange.bind(this);
+    this.handlePriceChange = this.handlePriceChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+
   }
 
-  handleChange = (event, index, value) => this.setState({ model: value });
-  handleRadioChange = (event, value) => this.setState({ status: value });
-  handlePriceChange = (event, value) => this.setState({ price: value });
+  handleModelChange(event, index, value) {
+    this.setState({ model: value });
+  }
 
-  handleSubmit = () => {
-    const { action, model, status, price, id } = this.state;
+  handleStatusChange(event, value) {
+    this.setState({ status: value });
+  }
+
+  handlePriceChange(event, value) {
+    this.setState({ price: value });
+  }
+
+  handleSubmit() {
+    const { model, status, price } = this.state;
+    const { id } = this.props;
     const payload = {
       model,
-      price,
-      status
+      status,
+      price
     };
-
-    if (action === "ADD") {
-      this.props.addItem(payload);
-    } else if (action === "UPDATE") {
-      this.props.updateItem(id, payload);
-    }
-    this.props.history.push(routes.HOME);
-  };
+    this.props.handleOnClick(payload, id);
+  }
 
   render() {
     return (
@@ -48,7 +52,7 @@ class Add extends Component {
         <SelectField
           floatingLabelText="Models"
           value={this.state.model}
-          onChange={this.handleChange}
+          onChange={this.handleModelChange}
         >
           <MenuItem value="Iphone 7" primaryText="Iphone 7" />
           <MenuItem value="Iphone 7s" primaryText="Iphone 7s" />
@@ -61,7 +65,7 @@ class Add extends Component {
         <br />
         <RadioButtonGroup
           name="old-new"
-          onChange={this.handleRadioChange}
+          onChange={this.handleStatusChange}
           defaultSelected="old"
         >
           <RadioButton
@@ -81,13 +85,14 @@ class Add extends Component {
         {this.state.action === "ADD" ? (
           <RaisedButton label="Add" primary onClick={this.handleSubmit} />
         ) : (
-          <RaisedButton label="Save" primary onClick={this.handleSubmit} />
-        )}
+            <RaisedButton label="Save" primary onClick={this.handleSubmit} />
+          )}
       </Paper>
     );
   }
 }
-export default connect(null, { addItem, updateItem })(Add);
+
+export default Form;
 
 const styles = {
   radioButton: {
