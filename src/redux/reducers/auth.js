@@ -1,12 +1,23 @@
-const auth = (state = {}, action) => {
-  switch (action.type) {
-    case 'LOGIN':
-      return { loggedIn: true };
-    case 'LOGOUT':
-      return { loggedIn: false };
-    default:
-      return state;
-  }
-}
+import { LOGIN, LOGOUT } from '../actions/auth';
 
-export default auth;
+//---------------------
+// Reducer Handler
+//---------------------
+const REDUCER_HANDLERS = {
+  [LOGIN]: (state = {}) => ({
+    ...state,
+    loggedIn: true,
+  }),
+  [LOGOUT]: (state = {}) => ({
+    ...state,
+    loggedIn: false,
+  }),
+};
+
+//-----------------------
+// Reducer
+//-----------------------
+export default function auth(state = {}, action) {
+  const handler = REDUCER_HANDLERS[action.type];
+  return handler ? handler(state, action) : state;
+}
