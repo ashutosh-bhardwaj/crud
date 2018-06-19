@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-
-import Snackbar from 'material-ui/Snackbar';
+import Snackbar from '@material-ui/core/Snackbar';
+import Button from '@material-ui/core/Button';
+import IconButton from '@material-ui/core/IconButton';
+import CloseIcon from '@material-ui/icons/Close';
 import { closeNotice } from '../../redux/actions';
 
 class Notice extends Component {
@@ -15,10 +17,25 @@ class Notice extends Component {
       <Snackbar
         open={open}
         message={message}
-        action="dismiss"
-        onActionClick={this.handlerRequestClose}
-        onRequestClose={this.handlerRequestClose}
-
+        action={[
+          <Button 
+            key="dismiss"
+            color="secondary"
+            size="small"
+            onClick={this.handlerRequestClose}
+          >
+            dismiss
+          </Button>,
+          <IconButton
+            key="close"
+            aria-label="Close"
+            color="inherit"
+            onClick={this.handlerRequestClose}
+          >
+            <CloseIcon />
+          </IconButton>,
+        ]}
+        onClose={this.handlerRequestClose}
       />
     );
   }

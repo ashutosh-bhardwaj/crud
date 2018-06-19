@@ -1,16 +1,16 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
-import TextField from 'material-ui/TextField';
-import Paper from 'material-ui/Paper';
-import RaisedButton from 'material-ui/RaisedButton';
-import { logIn } from '../../redux/actions';
+import TextField from '@material-ui/core/TextField';
+import Paper from '@material-ui/core/Paper';
+import Button from '@material-ui/core/Button';
 
+import { logIn } from '../../redux/actions';
 import { endPoints } from '../../config/routes';
 import { BACKGROUND } from '../../lib/constants';
 import './Auth.css';
 
-const user = {
+const USER = {
   email: 'ashutosh@hooli.com',
   password: 'reactisawesome',
 };
@@ -35,15 +35,15 @@ class Auth extends React.Component {
     if (field.password === '') {
       error.password = 'You can tell us the password!';
     }
-    if (!field.email && !field.email.trim() && field.email !== user.email) {
+    if (!field.email && !field.email.trim() && field.email !== USER.email) {
       field.email = '';
       error.email = 'Wrong Email';
     }
-    if (!field.password && !field.password.trim() && field.password !== user.password) {
+    if (!field.password && !field.password.trim() && field.password !== USER.password) {
       field.password = '';
       error.password = 'Wrong Password';
     }
-    if (field.email === user.email && field.password === user.password) {
+    if (field.email === USER.email && field.password === USER.password) {
       return true;
     }
     this.setState({ field, error });
@@ -53,15 +53,15 @@ class Auth extends React.Component {
 
   handleClick() {
     const isValid = this.isFieldsValid();
-
+    const { logIn, openNotice } = this.props;
     if (isValid) {
-      this.props.logIn();
-      this.props.openNotice({ message: 'Successfully Logged In' });
+      logIn();
+      openNotice({ message: 'Successfully Logged In' });
       this.setState({ loggedIn: true });
     }
   }
 
-  handleEmailChange = (event) => {
+  handleEmailChange = event => {
     const { field, error } = this.state;
     this.setState({
       field: { email: event.target.value, password: field.password },
@@ -69,7 +69,7 @@ class Auth extends React.Component {
     });
   };
 
-  handlePasswordChange = (event) => {
+  handlePasswordChange = event => {
     const { field, error } = this.state;
     this.setState({
       field: { password: event.target.value, email: field.email },
@@ -78,8 +78,9 @@ class Auth extends React.Component {
   }
 
   render() {
-    const { field, error } = this.state;
+    const { field } = this.state;
     const { loggedIn } = this.props;
+
     if (loggedIn) {
       return (
         <Redirect to={endPoints.default} />
@@ -87,38 +88,43 @@ class Auth extends React.Component {
     } else {
       return (
         <div className="container">
-          <Paper className="item" style={styles.formStyle} zDepth={2}>
+          <Paper className="item" style={styles.formStyle} elevation={2}>
             <h2 style={{ fontWeight: '200', color: '#939393', marginTop: '10px' }}>
-              Complete your registeration.
-          </h2>
+              Complete your sign-in.
+            </h2>
             <p style={{ color: '#a3a3a3' }}>
-              Fill in the information to complete your registeration.
-          </p>
+              Fill in the information to complete your sign-in.
+            </p>
             <br />
             <br />
             <TextField
-              hintText="Email"
-              errorText={error.email}
+              required
+              label="Email"
+              type="text"
               value={field.email}
               onChange={this.handleEmailChange}
             />
             <br />
             <br />
             <TextField
-              hintText="Password"
+              required
+              label="Password"
               type="password"
-              errorText={error.password}
               value={field.password}
               onChange={this.handlePasswordChange}
             />
             <br />
-            <RaisedButton
+            <br />
+            <Button
               label="Log In"
-              primary
+              variant="raised"
+              color="primary"
               onClick={this.handleClick}
-            />
+            >
+              Login
+            </Button>
           </Paper>
-          <Paper className="item" zDepth={2}>
+          <Paper className="item" elevation={2}>
             <img
               style={{ width: '100%', height: '100%' }}
               src={BACKGROUND}
