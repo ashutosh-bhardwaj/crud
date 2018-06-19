@@ -10,7 +10,6 @@ import { endPoints } from '../../config/routes';
 import Form from './Form';
 
 class AddPhone extends Component {
-
   handleOnClick = (payload) => {
     const { history, addPhone, notify } = this.props;
     addPhone(payload);
